@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 14 * * *'  # should be 2pm UTC which is morning central time
 
 jobs:
   check_temps:
