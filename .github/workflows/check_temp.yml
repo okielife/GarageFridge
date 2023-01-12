@@ -1,0 +1,12 @@
+on:
+  schedule:
+    - cron: '10 * * * *'
+
+jobs:
+  test_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Temp every hour
+        run: | 
+          pip install requests
+          python3 action_job.py ${{ secrets.IP_AND_PORT }} ${{ secrets.IFTTT_EVENT }} ${{ secrets.IFTTT_TOKEN }}
