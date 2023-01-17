@@ -40,16 +40,26 @@ def api():
     return json.dumps({'fridge_temp': fridge_temp, 'freezer_temp': freezer_temp})
     
 
-# set up a web server to listen for requests and return an html chunk
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # creating socket object
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind(('', 80))
-s.listen(5)
+addr = socket.getaddrinfo('0.0.0.0', 80)[0][-1]
+
+s = socket.socket()
+s.bind(addr)
+s.listen(1)
+
+print('listening on', addr)
+
+# Listen for connections
 while True:
-    conn, addr = s.accept()
-    print('Got a connection from %s' % str(addr))
-    request = conn.recv(1024)
-    response = api()
-    conn.send('HTTP/1.0 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n' + response + '\r\n')
-    conn.close()
+    try:
+        cl, addr = s.accept()
+        print('client connected from', addr)
+        request = cl.recv(1024)
+        print(request)
+        response = api()
+        cl.send('HTTP/1.0 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n' + response + '\r\n')
+        cl.close()
+    except OSError as e:
+        cl.close()
+        print('connection closed')
+
 
