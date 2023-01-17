@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Check Temp every hour
+      - name: Check Temp on demand
         run: | 
           pip install requests
           python3 action_job.py "http://${{ secrets.IP_AND_PORT }}" ${{ secrets.IFTTT_EVENT }} ${{ secrets.IFTTT_TOKEN }}
