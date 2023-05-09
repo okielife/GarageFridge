@@ -20,7 +20,7 @@ def get_temps() -> Tuple[float, float]:
     return data['fridge_temp'], data['freezer_temp']
 
 
-fridge_temp_limit = 2
+fridge_temp_limit = 3
 freezer_temp_limit = -10
 print(f"Limits defined as: {fridge_temp_limit=}, {freezer_temp_limit=}")
 
