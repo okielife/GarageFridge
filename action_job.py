@@ -1,5 +1,5 @@
 from json import dumps
-from requests import get, post
+from requests import get
 from sys import argv, exit
 from time import sleep
 from typing import Tuple
@@ -34,11 +34,5 @@ sleep(120)
 
 fridge_temp, freezer_temp = get_temps()
 if freezer_temp > freezer_temp_limit or fridge_temp > fridge_temp_limit:
-    ifttt_response = post(
-        f"https://maker.ifttt.com/trigger/{ifttt_event}/json/with/key/{ifttt_token}",
-        headers={'content-type': 'application/json'},
-        data=dumps({
-            'fridge': f"Current temp = {fridge_temp}; Limit = {fridge_temp_limit}",
-            'freezer': f"Current temp = {freezer_temp}; Limit = {freezer_temp_limit}"
-        })
-    )
+    print("Temps out of range again! Aborting to trigger action failure")
+    exit(1)
